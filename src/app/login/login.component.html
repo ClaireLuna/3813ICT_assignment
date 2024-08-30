@@ -1,0 +1,20 @@
+<div class="container-md p-3 vh-100">
+  <div
+    class="container-xs bg-light p-3 rounded position-relative top-50 start-50 translate-middle"
+  >
+    <form (ngSubmit)="submitLogin()">
+      <div class="mb-3">
+        <label for="usernameInput" class="form-label">Username</label>
+        <input type="email" class="form-control" id="usernameInput" />
+      </div>
+      <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input type="password" class="form-control" id="passwordInput" />
+      </div>
+      <button type="submit" class="btn btn-primary me-3">Login</button>
+      <button role="button" routerLink="/register" class="btn btn-secondary">
+        Register
+      </button>
+    </form>
+  </div>
+</div>
