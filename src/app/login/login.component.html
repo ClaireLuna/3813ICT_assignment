@@ -5,14 +5,27 @@
     <form (ngSubmit)="submitLogin()">
       <div class="mb-3">
         <label for="usernameInput" class="form-label">Username</label>
-        <input type="email" class="form-control" id="usernameInput" />
+        <input
+          [(ngModel)]="username"
+          name="username"
+          type="text"
+          class="form-control"
+          id="usernameInput"
+        />
       </div>
       <div class="mb-3">
         <label for="passwordInput" class="form-label">Password</label>
-        <input type="password" class="form-control" id="passwordInput" />
+        <input
+          [(ngModel)]="password"
+          name="password"
+          type="password"
+          class="form-control"
+          id="passwordInput"
+        />
       </div>
+      <div class="invalid-feedback" [innerHTML]="error"></div>
       <button type="submit" class="btn btn-primary me-3">Login</button>
-      <button role="button" routerLink="/register" class="btn btn-secondary">
+      <button role="button" routerLink="groups" class="btn btn-secondary">
         Register
       </button>
     </form>
