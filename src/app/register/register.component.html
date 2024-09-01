@@ -2,7 +2,7 @@
   <div
     class="container-xs bg-light p-3 rounded position-relative top-50 start-50 translate-middle"
   >
-    <form (ngSubmit)="submitLogin()">
+    <form (ngSubmit)="submitRegister()">
       <div class="mb-3">
         <label for="usernameInput" class="form-label">Username</label>
         <input
@@ -11,6 +11,16 @@
           type="text"
           class="form-control"
           id="usernameInput"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">Email</label>
+        <input
+          [(ngModel)]="email"
+          name="email"
+          type="email"
+          class="form-control"
+          id="emailInput"
         />
       </div>
       <div class="mb-3">
@@ -24,9 +34,9 @@
         />
       </div>
       <div class="invalid-feedback" [innerHTML]="error"></div>
-      <button type="submit" class="btn btn-primary me-3">Login</button>
-      <button (click)="handleRegister()" class="btn btn-secondary">
-        Register
+      <button type="submit" class="btn btn-primary me-3">Register</button>
+      <button (click)="handleLoginRedirect()" class="btn btn-secondary">
+        Already have an account
       </button>
     </form>
   </div>

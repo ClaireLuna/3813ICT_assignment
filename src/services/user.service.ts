@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { apiUrl } from '../constants';
 
 interface userResponse {
@@ -19,5 +19,17 @@ export class UserService {
     };
 
     return this.http.post<userResponse>(apiUrl + 'login', body);
+  }
+
+  register(username: string, email: string, password: string) {
+    const body = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    return this.http.post<HttpResponse<any>>(apiUrl + 'register', body, {
+      observe: 'response',
+    });
   }
 }
