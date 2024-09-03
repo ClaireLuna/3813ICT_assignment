@@ -7,4 +7,8 @@ export class Group {
     this.name = name;
     this.createdBy = createdBy;
   }
+
+  isCreatedBy = (userId: string = ''): boolean => {
+    return this.createdBy === userId;
+  };
 }

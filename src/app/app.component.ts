@@ -40,6 +40,6 @@ export class AppComponent implements OnInit {
     this.authService.user = undefined;
     this.user = undefined;
 
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
   }
 }

@@ -1,22 +1,30 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { apiUrl } from '../../constants';
 import { ErrorService } from './error.service';
 import { User } from '../models/user';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private errorService: ErrorService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient,
+    private errorService: ErrorService
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
+  private isBrowser!: boolean;
   private _user: User | undefined;
 
   public get user(): User | undefined {
     // Get from local storage if it's undefined
-    if (!this._user) {
+    if (!this._user && this.isBrowser) {
       const user = localStorage.getItem('user');
       if (user) {
         this._user = JSON.parse(user);
@@ -26,7 +34,7 @@ export class AuthService {
   }
 
   public set user(user: User | undefined) {
-    if (typeof window !== 'undefined') {
+    if (this.isBrowser) {
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));
       } else {
@@ -63,8 +71,9 @@ export class AuthService {
       .pipe(catchError(this.errorService.handleError));
   }
 
-  getAuthHeader(): { authorization: string } {
-    console.log(this._user);
-    return { authorization: this._user?.apiToken || '' };
+  getAuthHeader(): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.set('authorization', this._user?.apiToken || '');
+    return headers;
   }
 }

@@ -49,6 +49,6 @@ export class RegisterComponent {
   }
 
   handleLoginRedirect() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
   }
 }
