@@ -29,9 +29,7 @@ export class RegisterComponent {
       .subscribe(
         (response) => {
           if (response.body.token !== undefined) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('token', response.body.token);
-            }
+            this.authService.user = response.body;
             this.router.navigateByUrl('/groups');
           } else {
             this.errorMessage = 'An error occurred';

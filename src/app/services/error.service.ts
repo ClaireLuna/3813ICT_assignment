@@ -10,7 +10,7 @@ export class ErrorService {
 
   public handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
-    if (error.error instanceof ErrorEvent) {
+    if (error.error instanceof HttpErrorResponse) {
       // Client-side errors
       errorMessage = `Error: ${error.error.message}`;
       console.log(errorMessage);
