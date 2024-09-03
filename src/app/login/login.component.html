@@ -23,7 +23,9 @@
           id="passwordInput"
         />
       </div>
-      <div class="invalid-feedback" [innerHTML]="error"></div>
+      <div *ngIf="errorMessage" class="invalid-feedback d-block mb-3">
+        {{ errorMessage }}
+      </div>
       <button type="submit" class="btn btn-primary me-3">Login</button>
       <button (click)="handleRegister()" class="btn btn-secondary">
         Register

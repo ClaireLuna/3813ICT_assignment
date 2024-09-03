@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { HttpResponse } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -13,28 +12,42 @@ import { HttpResponse } from '@angular/common/http';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   password = '';
   email = '';
   username = '';
-  error = '';
+  errorMessage = '';
 
   submitRegister() {
-    this.userService
+    this.authService
       .register(this.username, this.email, this.password)
-      .subscribe((data: HttpResponse<any>) => {
-        console.log(data);
-        if (data.ok) {
-          if (typeof window !== 'undefined')
-            localStorage.setItem('username', this.username);
-          this.router.navigateByUrl('/groups');
-        } else if (data.status == 400) {
-          this.error = 'Username already exists, please try a different one';
-        } else {
-          this.error = 'We are having some techincal difficulties';
+      .subscribe(
+        (response) => {
+          if (response.body.token !== undefined) {
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('token', response.body.token);
+            }
+            this.router.navigateByUrl('/groups');
+          } else {
+            this.errorMessage = 'An error occurred';
+            this.cdr.detectChanges();
+          }
+        },
+        (error) => {
+          if (error.cause.status === 403) {
+            this.errorMessage = 'User already exists';
+          } else {
+            this.errorMessage = 'An error occurred';
+          }
+          this.cdr.detectChanges();
+          console.error('Register failed', error);
         }
-      });
+      );
   }
 
   handleLoginRedirect() {
