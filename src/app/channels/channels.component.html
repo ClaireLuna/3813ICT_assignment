@@ -1,1 +1,70 @@
-<p>channels works!</p>
+<div class="container-xs bg-light p-3 rounded h-100">
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Channels for {{ group?.name }}</h3>
+    <button
+      *ngIf="isAdmin"
+      data-bs-toggle="modal"
+      data-bs-target="#createChannelModal"
+      class="btn btn-primary"
+    >
+      Create Channel
+    </button>
+  </div>
+  <div class="list-group">
+    <div *ngFor="let channel of channels" class="d-flex">
+      <a
+        [routerLink]="['/channels/detail']"
+        [queryParams]="{ channel: channel.id }"
+        class="list-group-item list-group-item-action flex-grow-1"
+      >
+        <h5 class="my-2">{{ channel.name }}</h5>
+      </a>
+      <a
+        *ngIf="canDelete()"
+        (click)="handleDeleteChannel(channel.id)"
+        href="#"
+        class="list-group-item list-group-item-action bg-danger link-light w-25"
+      >
+        <p class="my-2">Delete</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createChannelModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Channel for {{ group?.name }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="handleCreateChannel()">
+          <div class="mb-3">
+            <label for="channelNameInput" class="form-label"
+              >Channel Name</label
+            >
+            <input
+              [(ngModel)]="channelName"
+              name="groupName"
+              type="text"
+              class="form-control"
+              id="channelNameInput"
+            />
+          </div>
+          <div *ngIf="modalError" class="invalid-feedback d-block mb-3">
+            {{ modalError }}
+          </div>
+          <button type="submit" class="btn btn-primary me-3">
+            Create Channel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

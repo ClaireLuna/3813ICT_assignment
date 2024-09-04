@@ -15,19 +15,18 @@
       <a
         [routerLink]="['/channels']"
         [queryParams]="{ group: group.id }"
-        class="list-group-item list-group-item-action"
+        class="list-group-item list-group-item-action flex-grow-1"
       >
         <h5 class="my-2">{{ group.name }}</h5>
       </a>
-      <div>
-        <button
-          *ngIf="user?.role === 'SuperAdmin' || group.isCreatedBy(user?.id)"
-          (click)="handleDeleteGroup(group.id)"
-          class="btn btn-danger ms-2 position-relative top-50 start-50 translate-middle"
-        >
-          Delete
-        </button>
-      </div>
+      <a
+        *ngIf="canDelete(group)"
+        (click)="handleDeleteGroup(group.id)"
+        href="#"
+        class="list-group-item list-group-item-action bg-danger link-light w-25"
+      >
+        <p class="my-2">Delete</p>
+      </a>
     </div>
   </div>
 </div>

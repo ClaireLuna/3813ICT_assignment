@@ -1,14 +1,14 @@
 export class Group {
   id: string;
   name: string;
-  createdBy: string;
-  constructor(id: string = '', name: string = '', createdBy: string = '') {
+  createdById: string;
+  constructor(id: string = '', name: string = '', createdById: string = '') {
     this.id = id;
     this.name = name;
-    this.createdBy = createdBy;
+    this.createdById = createdById;
   }
 
   isCreatedBy = (userId: string = ''): boolean => {
-    return this.createdBy === userId;
+    return this.createdById === userId;
   };
 }

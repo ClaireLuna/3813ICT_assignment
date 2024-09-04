@@ -50,6 +50,14 @@ export class GroupsComponent implements OnInit {
     );
   }
 
+  canDelete(group: Group): boolean {
+    console.log(this.user);
+    console.log(group);
+    return (
+      this.user?.role === 'SuperAdmin' || group.createdById === this.user?.id
+    );
+  }
+
   handleCreateGroup = () => {
     this.groupService.createGroup(this.groupName).subscribe(
       (response) => {

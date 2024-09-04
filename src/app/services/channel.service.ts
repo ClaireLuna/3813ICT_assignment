@@ -8,47 +8,37 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class GroupService {
+export class ChannelService {
   constructor(
     private http: HttpClient,
     private errorService: ErrorService,
     private authService: AuthService
   ) {}
 
-  public getGroup = (id: string): Observable<any> => {
+  public getChannels = (groupId: string): Observable<any> => {
     return this.http
-      .get<any>(apiUrl + 'group/' + id, {
+      .get<any>(apiUrl + 'channel/' + groupId, {
         observe: 'response',
         headers: this.authService.getAuthHeader(),
       })
       .pipe(catchError(this.errorService.handleError));
   };
 
-  public getGroups = (): Observable<any> => {
-    return this.http
-      .get<any>(apiUrl + 'group', {
-        observe: 'response',
-        headers: this.authService.getAuthHeader(),
-      })
-      .pipe(catchError(this.errorService.handleError));
-  };
-
-  public createGroup = (name: string): Observable<any> => {
+  public createChannel = (groupId: string, name: string): Observable<any> => {
     let body = { name: name };
     return this.http
-      .post<any>(apiUrl + 'group', body, {
+      .post<any>(apiUrl + 'channel/' + groupId, body, {
         observe: 'response',
         headers: this.authService.getAuthHeader(),
       })
       .pipe(catchError(this.errorService.handleError));
   };
 
-  public deleteGroup = (id: string): Observable<any> => {
+  public deleteChannel = (id: string): Observable<any> => {
     return this.http
-      .delete<any>(apiUrl + 'group', {
+      .delete<any>(apiUrl + 'channel/' + id, {
         observe: 'response',
         headers: this.authService.getAuthHeader(),
-        body: { id: id },
       })
       .pipe(catchError(this.errorService.handleError));
   };
