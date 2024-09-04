@@ -1,27 +1,98 @@
-# 3813ICTAssignment
+# 3813ICT Assignment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+## Git Organisation
+### Branching
+I did not use any branches for this project as I was the only one working on it. 
 
-## Development server
+### Update Frequency
+I committed and pushed my changes when I had finished a component or set of related endpoints.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Frontend/Backend
+The frontend and backend of this project are in two separate repos. This was to make it easier to mentally separate the work.
 
-## Code scaffolding
+## Data Structures
+### User
+__id__: string
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+__username__: string
 
-## Build
+__email__: string
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+__hash__: string - stored in db, generated from password
 
-## Running unit tests
+__apiToken__: string
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+__role__: string - User, Admin, or SuperAdmin
 
-## Running end-to-end tests
+### Group
+__id__: string
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+__name__: string
 
-## Further help
+__createdBy__: User - The user who created the group
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Channel
+__id__: string
+
+__name__: string
+
+__group__: Group - The group the channel belongs to
+
+### GroupUser
+Used in db for relationship between user and group
+
+__id__: string
+
+__user__: User
+
+__group__: Group
+
+## Angular Architecture
+### Components
+- login
+- register
+- groups
+- channels
+- channel-details
+- users
+
+### Services
+- auth
+- channel
+- error
+- group
+- user
+
+### Models
+- channel
+- group
+- user
+
+### Routes
+- /login
+- /register
+- /groups
+- /channels
+- /channels/details
+- /users
+
+## Server Routes
+### Auth
+__Register__
+
+__params__: username, email, password
+
+__returns__: user object
+
+__purpose__: Allow users to register and access the site
+
+
+__Login__
+
+__params__: username, password
+
+__returns__: user object
+
+__purpose__: Allow users to login and access the site
+
+### Channel
