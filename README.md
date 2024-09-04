@@ -95,4 +95,126 @@ __returns__: user object
 
 __purpose__: Allow users to login and access the site
 
+### Group
+__Post__
+
+__params__: name
+
+__returns__: group object
+
+__purpose__: create a new group
+
+__Get__
+
+__params__: none
+
+__returns__: list of all groups the user is a member of
+
+__purpose__: Get all of the user's groups
+
+__Get by ID__
+
+__params__: group ID
+
+__returns__: group object
+
+__purpose__: Get the details of a particular group
+
+__Put__
+
+__params__: id, name
+
+__returns__: group object
+
+__purpose__: Allow updating group name
+
+__Delete__
+
+__params__: id
+
+__returns__: group object
+
+__purpose__: Allow deleting a group
+
 ### Channel
+__Get__
+
+__params__: group ID
+
+__returns__: List of channels in the provided group
+
+__purpose__: Get all channels in a group
+
+__Get by ID__
+
+__params__: id
+
+__returns__: channel object
+
+__purpose__: Get channel by ID
+
+__Post__
+
+__params__: group ID, name
+
+__returns__: channel object
+
+__purpose__: Create a channel
+
+__Put__
+
+__params__: id, name
+
+__returns__: channel object
+
+__purpose__: Update channel name
+
+__delete__
+
+__params__: id
+
+__returns__: response status
+
+__purpose__: delete channel
+
+### User
+__Get__
+
+__params__: none
+
+__returns__: List of all users
+
+__purpose__: Get all users
+
+__Get current__
+
+__params__: none
+
+__returns__: Current user object
+
+__purpose__: Get details of current user
+
+__Get by ID__
+
+__params__: id
+
+__returns__: user object
+
+__purpose__: Get user by ID
+
+__Put__
+
+__params__: id, email?, role?
+
+__returns__: user object
+
+__purpose__: Update email or role for user
+
+__Delete__
+
+__params__: id
+
+__returns__: status code
+
+__purpose__: delete user
+
