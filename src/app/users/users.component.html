@@ -1,0 +1,75 @@
+<div class="container text-center pt-3">
+  <div class="row row-cols-3">
+    <div *ngFor="let user of users" class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.username }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">
+            {{ user.email }}
+          </h6>
+          <p class="card-text">
+            {{ user.role }}
+          </p>
+          <div class="container text-center">
+            <div class="row row-cols-2">
+              <div class="col">
+                <button
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#modal-' + user.id"
+                  (onclick)="userRole = user.role"
+                  class="btn btn-primary"
+                >
+                  Update Role
+                </button>
+              </div>
+              <div class="col">
+                <button class="btn btn-danger" (click)="deleteUser(user.id)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" [id]="'modal-' + user.id" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Role for {{ user.username }}</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form (ngSubmit)="updateUserRole(user.id)">
+                <div class="mb-3">
+                  <label for="roleInput" class="form-label">Role</label>
+                  <select
+                    [(ngModel)]="userRole"
+                    name="role"
+                    id="roleInput"
+                    class="form-select"
+                  >
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                    <option value="SuperAdmin">Super Admin</option>
+                  </select>
+                </div>
+                <div *ngIf="modalError" class="invalid-feedback d-block mb-3">
+                  {{ modalError }}
+                </div>
+                <button type="submit" class="btn btn-primary me-3">
+                  Update Role
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
