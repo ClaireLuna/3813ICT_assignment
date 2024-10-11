@@ -12,6 +12,6 @@ export const routes: Routes = [
   { path: 'groups', component: GroupsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'channels', component: ChannelsComponent },
-  { path: 'channels/details', component: ChannelDetailsComponent },
+  { path: 'channels/detail', component: ChannelDetailsComponent },
   { path: 'users', component: UsersComponent },
 ];

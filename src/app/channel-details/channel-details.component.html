@@ -1,1 +1,31 @@
-<p>Placeholder for chat screen</p>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h3>Chat Channel</h3>
+    </div>
+    <div class="card-body">
+      <div class="messages">
+        <div *ngFor="let message of messages" class="message mb-2">
+          <strong>{{ message.user.username }}:</strong> {{ message.content }}
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <form (ngSubmit)="sendMessage()">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="newMessage"
+            name="message"
+            placeholder="Type a message..."
+            required
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
