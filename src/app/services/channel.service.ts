@@ -42,4 +42,13 @@ export class ChannelService {
       })
       .pipe(catchError(this.errorService.handleError));
   };
+
+  public getChannel = (id: string): Observable<any> => {
+    return this.http
+      .get<any>(apiUrl + 'channel/get/' + id, {
+        observe: 'response',
+        headers: this.authService.getAuthHeader(),
+      })
+      .pipe(catchError(this.errorService.handleError));
+  };
 }

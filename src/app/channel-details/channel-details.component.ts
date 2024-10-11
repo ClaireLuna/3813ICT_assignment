@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageResponse, SocketService } from '../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { ChannelService } from '../services/channel.service';
 
 @Component({
   selector: 'app-channel-details',
@@ -16,22 +17,42 @@ export class ChannelDetailsComponent implements OnInit {
   ioSubsription: any;
   channelId: string = '';
   messages: MessageResponse[] = [];
-  newMessage: string = 'test';
+  newMessage: string = '';
   newImage: string = '';
   currentUserId: string = '';
+  channel: any;
 
   constructor(
     private route: ActivatedRoute,
     private socketService: SocketService,
-    private authService: AuthService
+    private authService: AuthService,
+    private channelService: ChannelService,
+    private router: Router
   ) {
-    this.currentUserId = this.authService.user?.id || '';
-  }
+    if (!this.authService.user) {
+      this.router.navigateByUrl('/login');
+      return;
+    }
 
-  ngOnInit(): void {
+    this.currentUserId = this.authService.user?.id || '';
+
     this.route.queryParams.subscribe((params) => {
       this.channelId = params['channel'];
     });
+
+    this.channelService.getChannel(this.channelId).subscribe(
+      (response) => {
+        console.log(response);
+        this.channel = response.body;
+        console.log(this.channel);
+      },
+      (error) => {
+        console.error('Failed to get channel', error);
+      }
+    );
+  }
+
+  ngOnInit(): void {
     this.initSocketConnection();
   }
 
@@ -82,4 +103,10 @@ export class ChannelDetailsComponent implements OnInit {
       console.log('Selected file:', file);
     }
   }
+
+  leaveChannel = () => {
+    this.router.navigate(['/channels'], {
+      queryParams: { group: this.channel.groupId },
+    });
+  };
 }
