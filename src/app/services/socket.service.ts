@@ -43,6 +43,20 @@ export class SocketService {
         this.messages.push(message);
         observer.next(this.messages);
       });
+      this.socket.on('userJoined', (name: string) => {
+        this.messages.push({
+          content: `${name} joined`,
+          image: null,
+          user: { id: '', username: 'Channel' },
+        });
+      });
+      this.socket.on('userLeft', (name: string) => {
+        this.messages.push({
+          content: `${name} left`,
+          image: null,
+          user: { id: '', username: 'Channel' },
+        });
+      });
     });
   };
 
