@@ -4,6 +4,7 @@ export class User {
   email: string;
   apiToken: string;
   role: string;
+  photo: string = '';
 
   constructor(
     id: string = '',

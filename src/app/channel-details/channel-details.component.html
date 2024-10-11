@@ -15,6 +15,12 @@
     >
       <div class="messages">
         <div *ngFor="let message of messages" class="message mb-2">
+          <img
+            class="img-thumbnail border-0"
+            [src]="'http://localhost:3000/user/photo/' + message.user.id"
+            alt="Profile Picture"
+            style="width: 2em; height: 2em"
+          />
           <strong
             [ngClass]="{ 'text-primary': message.user.id === currentUserId }"
           >

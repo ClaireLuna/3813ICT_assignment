@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrl: './users.component.scss',
 })
 export class UsersComponent implements OnInit {
+  currentUser?: User | null;
   users: User[] = [];
   userRole: string = '';
   modalError: string = '';
@@ -25,12 +26,7 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let user = this.authService.user;
-    if (!user || user.role !== 'SuperAdmin') {
-      this.router.navigateByUrl('/');
-      return;
-    }
-
+    this.currentUser = this.authService.user;
     this.userService.getUsers().subscribe(
       (response) => {
         this.users = response.body;

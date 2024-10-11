@@ -42,4 +42,22 @@ export class UserService {
       })
       .pipe(catchError(this.errorService.handleError));
   };
+
+  public updatePhoto = (photo: string): Observable<any> => {
+    let body = { photo: photo };
+    return this.http
+      .post<any>(apiUrl + 'user/photo/', body, {
+        observe: 'response',
+        headers: this.authService.getAuthHeader(),
+      })
+      .pipe(catchError(this.errorService.handleError));
+  };
+
+  public getPhoto = (id: string): Observable<string> => {
+    return this.http
+      .get<string>(apiUrl + 'user/photo/' + id, {
+        headers: this.authService.getAuthHeader(),
+      })
+      .pipe(catchError(this.errorService.handleError));
+  };
 }

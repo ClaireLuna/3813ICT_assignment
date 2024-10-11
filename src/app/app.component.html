@@ -6,12 +6,12 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/groups">Groups</a>
         </li>
-        <li *ngIf="user?.role === 'SuperAdmin'" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/users">Users</a>
         </li>
       </ul>
-      <div *ngIf="user" class="ms-auto">
-        <span class="me-3">{{ user.username }}</span>
+      <div *ngIf="user" class="ms-auto d-flex">
+        <a class="nav-link me-3" href="/user">{{ user.username }}</a>
         <button class="btn btn-primary" type="button" (click)="logoutHandler()">
           Log out
         </button>

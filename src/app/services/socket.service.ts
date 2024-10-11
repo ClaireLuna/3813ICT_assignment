@@ -30,7 +30,7 @@ export class SocketService {
   };
 
   disconnect = () => {
-    this.socket.disconnect();
+    this.socket?.disconnect();
   };
 
   getMessages = (): Observable<MessageResponse[]> => {

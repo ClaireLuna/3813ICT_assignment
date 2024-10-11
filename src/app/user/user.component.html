@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h3>{{ user?.username }}</h3>
+    </div>
+    <div class="card-body text-center">
+      <div *ngIf="user?.photo; else noPicture">
+        <img
+          [src]="user.photo"
+          class="img-thumbnail mb-3"
+          alt="User Picture"
+          width="150"
+          height="150"
+        />
+      </div>
+      <ng-template #noPicture>
+        <img
+          src="https://via.placeholder.com/150"
+          class="img-thumbnail mb-3"
+          alt="No Picture"
+          width="150"
+          height="150"
+        />
+      </ng-template>
+      <form (ngSubmit)="uploadPicture()">
+        <div class="form-group">
+          <label for="pictureUpload">Upload New Picture</label>
+          <input
+            type="file"
+            class="form-control form-control-file"
+            id="pictureUpload"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

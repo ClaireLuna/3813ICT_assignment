@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { ChannelService } from '../services/channel.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-channel-details',
@@ -27,6 +28,7 @@ export class ChannelDetailsComponent implements OnInit {
     private socketService: SocketService,
     private authService: AuthService,
     private channelService: ChannelService,
+    private userService: UserService,
     private router: Router
   ) {
     if (!this.authService.user) {
@@ -57,8 +59,8 @@ export class ChannelDetailsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.ioSubsription.unsubscribe();
-    this.socketService.disconnect();
+    this.ioSubsription?.unsubscribe();
+    this.socketService?.disconnect();
   }
 
   private initSocketConnection = () => {
@@ -84,13 +86,17 @@ export class ChannelDetailsComponent implements OnInit {
     this.socketService.sendMessage({ content: null, image: this.newImage });
   };
 
-  toBase64 = (file: File): Promise<string> =>
+  private toBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = (error) => reject(error);
     });
+
+  getProfilePic = async (id: string) => {
+    return this.userService.getPhoto(id);
+  };
 
   async onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
