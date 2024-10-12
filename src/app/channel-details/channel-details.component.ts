@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { ChannelService } from '../services/channel.service';
 import { UserService } from '../services/user.service';
+import { apiUrl } from '../../constants';
 
 @Component({
   selector: 'app-channel-details',
@@ -22,6 +23,9 @@ export class ChannelDetailsComponent implements OnInit {
   newImage: string = '';
   currentUserId: string = '';
   channel: any;
+  name: string = '';
+  isDirectMessage: boolean = false;
+  apiUrl = apiUrl;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,18 +44,22 @@ export class ChannelDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       this.channelId = params['channel'];
+      this.name = params['name'];
+      this.isDirectMessage = params['isDirectMessage'] === 'true';
     });
 
-    this.channelService.getChannel(this.channelId).subscribe(
-      (response) => {
-        console.log(response);
-        this.channel = response.body;
-        console.log(this.channel);
-      },
-      (error) => {
-        console.error('Failed to get channel', error);
-      }
-    );
+    if (!this.isDirectMessage) {
+      this.channelService.getChannel(this.channelId).subscribe(
+        (response) => {
+          console.log(response);
+          this.channel = response.body;
+          console.log(this.channel);
+        },
+        (error) => {
+          console.error('Failed to get channel', error);
+        }
+      );
+    }
   }
 
   ngOnInit(): void {
@@ -111,8 +119,12 @@ export class ChannelDetailsComponent implements OnInit {
   }
 
   leaveChannel = () => {
-    this.router.navigate(['/channels'], {
-      queryParams: { group: this.channel.groupId },
-    });
+    if (this.channel?.groupId) {
+      this.router.navigate(['/channels'], {
+        queryParams: { group: this.channel.groupId },
+      });
+    } else {
+      this.router.navigate(['/users']);
+    }
   };
 }

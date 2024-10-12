@@ -14,7 +14,11 @@
     <div *ngFor="let channel of channels" class="d-flex">
       <a
         [routerLink]="['/channels/detail']"
-        [queryParams]="{ channel: channel.id }"
+        [queryParams]="{
+          channel: channel.id,
+          name: channel.name,
+          isDirectMessage: false
+        }"
         class="list-group-item list-group-item-action flex-grow-1"
       >
         <h5 class="my-2">{{ channel.name }}</h5>

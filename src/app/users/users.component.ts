@@ -67,4 +67,18 @@ export class UsersComponent implements OnInit {
       }
     );
   };
+
+  routeToDirectMessage = (user: any) => {
+    let roomId =
+      ('' + this.currentUser?.id).localeCompare(user.id) > 0
+        ? user.id + this.currentUser?.id
+        : this.currentUser?.id + user.id;
+    this.router.navigate(['/channels/detail'], {
+      queryParams: {
+        channel: roomId,
+        name: user.username,
+        isDirectMessage: true,
+      },
+    });
+  };
 }

@@ -2,7 +2,7 @@
   <div class="card" style="max-height: 80vh">
     <div class="card-header d-flex align-items-start">
       <button class="btn btn-danger me-3" (click)="leaveChannel()">Back</button>
-      <h3 class="mb-0">{{ channel?.name }}</h3>
+      <h3 class="mb-0">{{ name }}</h3>
     </div>
     <div
       class="card-body"
@@ -16,8 +16,9 @@
       <div class="messages">
         <div *ngFor="let message of messages" class="message mb-2">
           <img
+            *ngIf="message.user.username !== 'Channel'"
             class="img-thumbnail border-0"
-            [src]="'http://localhost:3000/user/photo/' + message.user.id"
+            [src]="apiUrl + 'user/photo/' + message.user.id"
             alt="Profile Picture"
             style="width: 2em; height: 2em"
           />
