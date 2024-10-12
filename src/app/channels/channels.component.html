@@ -11,7 +11,7 @@
     </button>
   </div>
   <div class="list-group">
-    <div *ngFor="let channel of channels" class="d-flex">
+    <div *ngFor="let channel of channels" class="d-flex channel">
       <a
         [routerLink]="['/channels/detail']"
         [queryParams]="{

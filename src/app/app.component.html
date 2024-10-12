@@ -4,18 +4,24 @@
       <span class="navbar-brand">{{ title }}</span>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/groups">Groups</a>
+          <a class="nav-link groups" aria-current="page" href="/groups"
+            >Groups</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users">Users</a>
+          <a class="nav-link users" href="/users">Users</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/videos">Videos</a>
+          <a class="nav-link videos" href="/videos">Videos</a>
         </li>
       </ul>
       <div *ngIf="user" class="ms-auto d-flex">
         <a class="nav-link me-3" href="/user">{{ user.username }}</a>
-        <button class="btn btn-primary" type="button" (click)="logoutHandler()">
+        <button
+          class="btn btn-primary logout"
+          type="button"
+          (click)="logoutHandler()"
+        >
           Log out
         </button>
       </div>

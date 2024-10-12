@@ -24,28 +24,33 @@ export class RegisterComponent {
   errorMessage = '';
 
   submitRegister() {
-    this.authService
-      .register(this.username, this.email, this.password)
-      .subscribe(
-        (response) => {
-          if (response.body.token !== undefined) {
-            this.authService.user = response.body;
-            this.router.navigateByUrl('/groups');
-          } else {
-            this.errorMessage = 'An error occurred';
+    if (this.username && this.email && this.password) {
+      this.authService
+        .register(this.username, this.email, this.password)
+        .subscribe(
+          (response) => {
+            if (response.body.apiToken !== undefined) {
+              this.authService.user = response.body;
+              this.router.navigateByUrl('/groups');
+            } else {
+              this.errorMessage = 'An error occurred';
+              this.cdr.detectChanges();
+            }
+          },
+          (error) => {
+            if (error.cause.status === 403) {
+              this.errorMessage = 'User already exists';
+            } else {
+              this.errorMessage = 'An error occurred';
+            }
             this.cdr.detectChanges();
+            console.error('Register failed', error);
           }
-        },
-        (error) => {
-          if (error.cause.status === 403) {
-            this.errorMessage = 'User already exists';
-          } else {
-            this.errorMessage = 'An error occurred';
-          }
-          this.cdr.detectChanges();
-          console.error('Register failed', error);
-        }
-      );
+        );
+    } else {
+      this.errorMessage = 'Please fill in missing fields';
+      this.cdr.detectChanges();
+    }
   }
 
   handleLoginRedirect() {

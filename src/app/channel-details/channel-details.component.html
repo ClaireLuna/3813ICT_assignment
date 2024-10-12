@@ -1,7 +1,9 @@
 <div class="container mt-4">
   <div class="card" style="max-height: 80vh">
     <div class="card-header d-flex align-items-start">
-      <button class="btn btn-danger me-3" (click)="leaveChannel()">Back</button>
+      <button class="btn btn-danger me-3 back" (click)="leaveChannel()">
+        Back
+      </button>
       <h3 class="mb-0">{{ name }}</h3>
     </div>
     <div
@@ -56,7 +58,7 @@
           />
           <div class="input-group-append">
             <button
-              class="btn btn-secondary"
+              class="btn btn-secondary openImageModal"
               data-bs-toggle="modal"
               data-bs-target="#imageModal"
               type="button"
