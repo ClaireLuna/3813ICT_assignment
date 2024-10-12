@@ -6,6 +6,7 @@ import { ChannelsComponent } from './channels/channels.component';
 import { UsersComponent } from './users/users.component';
 import { ChannelDetailsComponent } from './channel-details/channel-details.component';
 import { UserComponent } from './user/user.component';
+import { VideosComponent } from './videos/videos.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,4 +17,5 @@ export const routes: Routes = [
   { path: 'channels/detail', component: ChannelDetailsComponent },
   { path: 'users', component: UsersComponent },
   { path: 'user', component: UserComponent },
+  { path: 'videos', component: VideosComponent },
 ];

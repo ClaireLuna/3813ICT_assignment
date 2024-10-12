@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="row p-2">
+    <button
+      mat-raised-button
+      class="btn btn-primary"
+      [disabled]="isCallStarted"
+      (click)="streamCamera()"
+    >
+      Stream With Camera
+    </button>
+    <button
+      mat-raised-button
+      class="btn btn-secondary m-2"
+      [disabled]="isCallStarted"
+      (click)="streamScreen()"
+    >
+      Stream With Screen
+    </button>
+    <button
+      mat-raised-button
+      class="btn btn-danger"
+      [disabled]="!isCallStarted"
+      (click)="endCall()"
+    >
+      End Call
+    </button>
+  </div>
+
+  <h2>Peers</h2>
+  <ul class="list-group">
+    <li
+      class="list-group-item"
+      *ngFor="let peerId of peerList"
+      (click)="calling(peerId)"
+    >
+      <span>{{ peerId }}</span>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col" *ngFor="let video of videos">
+      <span *ngIf="video.userId !== ownId; else currentVideoLabel">
+        Peer: {{ video.userId }}
+      </span>
+      <ng-template #currentVideoLabel>
+        <span>You: {{ video.userId }}</span>
+      </ng-template>
+      <video
+        [srcObject]="video.srcObject"
+        class="w-100"
+        controls
+        autoplay
+        [muted]="video.muted"
+      ></video>
+    </div>
+  </div>
+</div>

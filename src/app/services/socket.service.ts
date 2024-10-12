@@ -63,4 +63,16 @@ export class SocketService {
   sendMessage = (message: MessageBase) => {
     this.socket.emit('sendMessage', message);
   };
+
+  peerId = (message: string) => {
+    this.socket.emit('peerId', message);
+  };
+
+  getPeerId = (): Observable<string> => {
+    return new Observable((observer) => {
+      this.socket.on('peerId', (peerId: string) => {
+        observer.next(peerId);
+      });
+    });
+  };
 }
