@@ -51,6 +51,7 @@ export class VideosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.socketService.initSocket();
     this.socketService.getPeerId().subscribe((peerId: any) => {
       if (peerId !== this.ownId) {
         this.peerList.push(peerId);

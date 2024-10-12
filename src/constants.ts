@@ -1,1 +1,1 @@
-export const apiUrl = 'http://localhost:3000/';
+export const apiUrl = 'https://s5038261.elf.ict.griffith.edu.au:3000/';

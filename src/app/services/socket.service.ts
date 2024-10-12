@@ -20,7 +20,7 @@ export class SocketService {
 
   constructor(private authService: AuthService) {}
 
-  initSocket = (channelId: string) => {
+  initSocket = (channelId?: string) => {
     this.socket = io(apiUrl, {
       auth: { token: this.authService.user?.apiToken, channelId: channelId },
     });
