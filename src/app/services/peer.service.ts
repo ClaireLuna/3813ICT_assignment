@@ -7,13 +7,13 @@ import { Peer } from 'peerjs';
 })
 export class PeerService {
   myPeerId = uuidv4();
-  myPeer: any;
+  myPeer: Peer;
   streamCamera: any;
   streamScreen: any;
 
   constructor() {
     this.myPeer = new Peer(this.myPeerId, {
-      host: 's5038261.elf.ict.griffith.edu.au',
+      host: 'localhost',
       secure: true,
       port: 3001,
       path: '/',

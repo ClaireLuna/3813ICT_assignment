@@ -26,6 +26,8 @@ export class AuthService {
     // Get from local storage if it's undefined
     if (!this._user && this.isBrowser) {
       const user = localStorage.getItem('user');
+      console.log('user', user);
+
       if (user) {
         this._user = JSON.parse(user);
       }

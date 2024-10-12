@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PeerService } from '../services/peer.service';
 import { SocketService } from '../services/socket.service';
+import { MediaConnection } from 'peerjs';
 
 interface VideoElement {
   muted: boolean;
@@ -36,15 +37,16 @@ const gumOptions = {
 export class VideosComponent implements OnInit {
   isCallStarted = false;
   ownId: string;
-  currentCall: any;
+  currentCall: MediaConnection | undefined;
   peerList: string[];
-  currentStream: any;
+  currentStream: MediaStream | undefined;
   videos: VideoElement[] = [];
   calls: any = [];
 
   constructor(
     private socketService: SocketService,
-    private peerService: PeerService
+    private peerService: PeerService,
+    private cdr: ChangeDetectorRef
   ) {
     this.peerList = [];
     this.ownId = this.peerService.myPeerId;
@@ -113,21 +115,25 @@ export class VideosComponent implements OnInit {
 
   calling = (peerId: string): void => {
     if (confirm(`Do you want to call ${peerId}?`)) {
-      const call = this.peerService.myPeer.call(peerId, this.currentStream, {
-        metadata: { peerId: this.ownId },
-      });
+      if (this.currentStream) {
+        const call = this.peerService.myPeer.call(peerId, this.currentStream, {
+          metadata: { peerId: this.ownId },
+        });
 
-      this.currentCall = call;
-      this.calls.push(call);
+        this.currentCall = call;
+        this.calls.push(call);
 
-      call.on('stream', (otherUserVideoStream: MediaStream) => {
-        this.addOtherUserVideo(peerId, otherUserVideoStream);
-      });
+        call.on('stream', (otherUserVideoStream: MediaStream) => {
+          this.addOtherUserVideo(peerId, otherUserVideoStream);
+        });
 
-      call.on('close', () => {
-        this.videos = this.videos.filter((v) => v.userId !== peerId);
-        this.calls = this.calls.filter((c: any) => c !== call);
-      });
+        call.on('close', () => {
+          this.videos = this.videos.filter((v) => v.userId !== peerId);
+          this.calls = this.calls.filter((c: any) => c !== call);
+        });
+      } else {
+        console.error('No current stream available to make a call.');
+      }
     }
   };
 
@@ -148,12 +154,13 @@ export class VideosComponent implements OnInit {
   };
 
   endCall = (): void => {
-    this.currentCall.close();
-    this.videos = this.videos.filter(
-      (v) => v.userId !== this.peerService.myPeerId
-    );
-    this.calls = this.calls.filter((c: any) => c !== this.currentCall);
-    this.currentStream.getTracks().forEach((track: any) => track.stop());
+    console.log('end call');
+    this.currentCall?.close();
+    this.videos = [];
+    this.calls = [];
+    this.currentStream?.getTracks().forEach((track: any) => track.stop());
+    this.currentStream = undefined;
     this.isCallStarted = false;
+    this.cdr.detectChanges();
   };
 }
