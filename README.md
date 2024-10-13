@@ -8,7 +8,7 @@ I did not use any branches for this project as I was the only one working on it.
 I committed and pushed my changes when I had finished a component or set of related endpoints.
 
 ### Frontend/Backend
-The frontend and backend of this project are in two separate repos. This was to make it easier to mentally separate the work.
+The frontend and backend of this project are in two separate repos. This was to make it easier to mentally separate the work. The backend project contains the socket server and peer server in the same application to logically couple related functions.
 
 ## Data Structures
 ### User
@@ -47,6 +47,19 @@ __user__: User
 
 __group__: Group
 
+### Message
+__id__: string
+
+__channelId__: string - Not linked to channel collection as this is also used for direct messaging
+
+__user__: User
+
+__content__: string - optional field
+
+__image__: string - optional field, stored as encoded string
+
+__createdAt__: DateTime
+
 ## Angular Architecture
 ### Components
 - login
@@ -55,6 +68,8 @@ __group__: Group
 - channels
 - channel-details
 - users
+- user
+- videos
 
 ### Services
 - auth
@@ -62,6 +77,8 @@ __group__: Group
 - error
 - group
 - user
+- socket
+- peer
 
 ### Models
 - channel
@@ -75,6 +92,8 @@ __group__: Group
 - /channels
 - /channels/details
 - /users
+- /user
+- /videos
 
 ## Server Routes
 ### Auth
@@ -217,4 +236,20 @@ __params__: id
 __returns__: status code
 
 __purpose__: delete user
+
+## Socket Events
+
+### Server to Client
+- allMessages - returns an array of MessageResponse
+- newMessage - returns a MessageResponse
+- userJoined - returns a string
+- userLeft - returns a string
+- peerId - returns a string
+- userId - returns a string
+- ownId - returns a string
+
+### Client to Server
+- sendMessage - requires a MessageRequest
+- peerId - requires a string
+
 
