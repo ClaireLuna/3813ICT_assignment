@@ -11,7 +11,10 @@
     </button>
   </div>
   <div class="list-group">
-    <div *ngFor="let channel of channels" class="d-flex channel">
+    <div
+      *ngFor="let channel of channels"
+      [class]="'d-flex channel channel-' + channel.name"
+    >
       <a
         [routerLink]="['/channels/detail']"
         [queryParams]="{
@@ -26,7 +29,6 @@
       <a
         *ngIf="canDelete()"
         (click)="handleDeleteChannel(channel.id)"
-        href="#"
         class="list-group-item list-group-item-action bg-danger link-light w-25"
       >
         <p class="my-2">Delete</p>

@@ -2,6 +2,8 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     cy.visit('/register'); // Adjust the URL to match your application's routing
   });
+
+  // Delete the registered user after running tests
   after(() => {
     // Simulate user login
     cy.window().then((win) => {

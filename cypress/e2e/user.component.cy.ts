@@ -1,3 +1,5 @@
+import 'cypress-file-upload';
+
 describe('UserComponent', () => {
   before(() => {
     cy.visit('/register'); // Adjust the URL to match your application's routing
@@ -36,6 +38,7 @@ describe('UserComponent', () => {
 
     // Clean up created user
     cy.visit('/users');
+    cy.wait(100);
     cy.get('.card.card-newUser').find('button.btn-danger').click();
   });
 

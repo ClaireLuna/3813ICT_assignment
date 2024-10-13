@@ -64,6 +64,7 @@ describe('ChannelDetailsComponent', () => {
     // Click the back button
     cy.get('button.back').click();
 
+    // TODO: Navigating to /users for some reason
     // Verify the URL changes to the channels page
     cy.url().should('include', '/channels');
   });

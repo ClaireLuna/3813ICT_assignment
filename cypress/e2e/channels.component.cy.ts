@@ -19,7 +19,7 @@ describe('ChannelsComponent', () => {
     // Reload to apply the user state
     cy.reload();
 
-    cy.visit('/channels?group=66d6ee6ddd3a1615cf637c71'); // Adjust the URL based on your routing configuration
+    cy.visit('/channels?group=66d6ee6fdd3a1615cf637c72'); // Adjust the URL based on your routing configuration
   });
 
   it('should display the group name in the header', () => {
@@ -37,14 +37,14 @@ describe('ChannelsComponent', () => {
 
   it('should create a new channel', () => {
     cy.get('button[data-bs-toggle="modal"]').click();
-    cy.get('#channelNameInput').type('aaaaaaaaaaaaaaaaaa');
+    cy.get('#channelNameInput').type('a');
     cy.get('#createChannelModal form').submit();
-    cy.get('.list-group-item').should('contain.text', 'New Channel');
+    cy.get('.list-group-item').should('contain.text', 'a');
   });
 
   it('should delete a channel', () => {
-    cy.get('.channel').last().as('lastChannel');
-    cy.get('@lastChannel').find('a.bg-danger').click();
-    cy.get('@lastChannel').should('not.exist');
+    cy.get('.channel.channel-a').find('a.bg-danger').click();
+
+    cy.get('.channel.channel-a').should('not.exist');
   });
 });

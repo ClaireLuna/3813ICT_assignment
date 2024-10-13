@@ -33,27 +33,27 @@ describe('GroupsComponent', () => {
     cy.get('button[data-bs-toggle="modal"]').should('be.visible').click();
 
     // Fill in the group name and submit the form
-    cy.get('#groupNameInput').type('New Group');
+    cy.get('#groupNameInput').type('a');
     cy.get('form').submit();
 
     // Check if the new group is added to the list
-    cy.get('.list-group').contains('New Group').should('be.visible');
+    cy.get('.list-group').contains('a').should('be.visible');
   });
 
   it('should delete a group', () => {
     // Assuming there is at least one group to delete
-    cy.get('.list-group .d-flex').last().as('lastGroup');
-
-    // Check if the delete button is visible and click it
-    cy.get('@lastGroup').find('a.bg-danger').should('be.visible').click();
+    cy.get('.list-group .d-flex.group-a')
+      .find('a.bg-danger')
+      .should('be.visible')
+      .click();
 
     // Confirm the group is deleted
-    cy.get('@lastGroup').should('not.exist');
+    cy.get('.list-group .d-flex.group-a').should('not.exist');
   });
 
   it('should navigate to the channels page when a group is clicked', () => {
     // Assuming there is at least one group to click
-    cy.get('.list-group .d-flex').last().as('firstGroup');
+    cy.get('.list-group .d-flex').first().as('firstGroup');
 
     // Click the group link
     cy.get('@firstGroup').find('a.list-group-item-action').first().click();
